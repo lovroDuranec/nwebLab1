@@ -16,6 +16,6 @@ const pool = new Pool({
 export async function getComments() {
     const comments: string[] = [];
     const results = await pool.query('SELECT id, comment from comments');
-    results.rows.forEach(r => comments.push(r.comment));
+    results.rows.forEach((r: {comment: string}) => comments.push(r.comment));
     return comments;
 }

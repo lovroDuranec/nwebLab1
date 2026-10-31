@@ -7,8 +7,8 @@ dotenv.config()
 
 
 const externalUrl = process.env.RENDER_EXTERNAL_URL;
-const port = externalUrl && process.env.PORT ? parseIn(process.env.PORT) : 4080;
-const baseURL = externalUrl || `http://localhost:${port}`,
+const port = externalUrl && process.env.PORT ? parseInt(process.env.PORT) : 4080;
+const baseURL = externalUrl || `http://localhost:${port}`
 
 const app = express();
 app.set("views", path.join(import.meta.dirname, "views"));
