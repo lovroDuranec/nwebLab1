@@ -6,10 +6,19 @@ dotenv.config();
 if (!process.env.DATABASE_URL) {
     throw new Error('nije dobar url');
 }
+const pool = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: 5432,
+    ssl: true
+})
+
 
 
 export async function initializeDatabase() {
-    await Pool.query(
+    await pool.query(
         `   CREATE TABLE IF NOT EXISTS passes (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             name VARCHAR(255) NOT NULL,
