@@ -1,11 +1,11 @@
 {
   "type": "module",
   "scripts": {
-    "build": "npm run clean && tsc && npm run copy-views && npm run copy-views", 
+    "build": "npm run clean && tsc -p tsconfig.json && npm run copy-views",
     "clean": "shx rm -rf dist",
-    "copy-views": "shx cp -r src/views/ dist",
+    "copy-views": "shx cp -r views dist",
     "start": "node dist/main.js"
-  },  
+  },
   "dependencies": {
     "dotenv": "^18.0.5",
     "express": "^5.2.1",
@@ -15,6 +15,7 @@
   "devDependencies": {
     "@types/node": "^24.0.0",
     "@types/express": "^5.0.6",
-    "shx": "^0.4.0"
+    "shx": "^0.4.0",
+    "typescript": "^5.9.3"
   }
 }
