@@ -43,7 +43,7 @@ app.use(auth(config));
 // (otherwise any page could log the user out with a link or redirect - logout CSRF)
 app.post('/logout', (req, res) => res.oidc.logout());
 
-app.get('/',  function (req, res) {
+app.get('/', async function (req, res) {
   let username : string | undefined;
   if (req.oidc.isAuthenticated()) {
     username = req.oidc.user?.name ?? req.oidc.user?.sub;
