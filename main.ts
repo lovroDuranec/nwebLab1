@@ -51,7 +51,9 @@ app.get('/', async function (req, res) {
 
   if (req.oidc.isAuthenticated()) {
     username = req.oidc.user?.name ?? req.oidc.user?.sub;
-    passes = await getPassFor(username);
+    if (username){
+      passes = await getPassFor(username);
+    }
   }
 
   const statistics = await getStatistics();
