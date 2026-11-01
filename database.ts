@@ -62,3 +62,11 @@ export async function getAllPasses(name: string){
 
     return result.rows;
 }
+
+export async function getPassFromId(id: string){
+    const result = await pool.query(`
+        SELECT id, name, document, issued_at, status FROM passes WHERE id = $1
+    `, [id]);
+
+    return result.rows[0];
+}

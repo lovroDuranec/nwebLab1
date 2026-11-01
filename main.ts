@@ -3,8 +3,8 @@ import path from 'path'
 import oidc from 'express-openid-connect';
 const { auth, requiresAuth } = oidc;
 import dotenv from 'dotenv'
-import { initializeDatabase, getStatistics, deletePass, cancelPass, getAllPasses } from './database.js';
-
+import { initializeDatabase, getStatistics, deletePass, cancelPass, getAllPasses, getPassFromId } from './database.js';
+import { checkJwt, requireReadPasses, requireCreatePasses } from './authMdw.js';
 dotenv.config()
 await initializeDatabase();
 
@@ -92,7 +92,24 @@ app.post('/:id/delete', requiresAuth(), async function (req, res){
   res.redirect('/');
 });
 
+app.get('/passes/:id', checkJwt, requireReadPasses, async function (req, res){
 
+  const id = req.params.id;
+  if (typeof id === 'string'){
+    const pass = await getPassFromId(id);
+    if (!pass){
+      return res.status(404);
+    }
+    return res.status(200).json(
+      {
+        "id": pass.id,
+        "name": pass.name,
+        "document": pass.document,
+        "issuedAt": pass.issued_at,
+        "status": pass.status
+      })
+  }
+});
 
 app.listen(port, hostname, () => {
   console.log(`Server locally running at http://${hostname}:${port}`)
