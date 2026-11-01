@@ -51,7 +51,7 @@ app.get('/', async function (req, res) {
 
   if (req.oidc.isAuthenticated()) {
     username = req.oidc.user?.name ?? req.oidc.user?.sub;
-    passes = await getPassfor(username);
+    passes = await getPassFor(username);
   }
 
   const statistics = await getStatistics();
@@ -81,13 +81,13 @@ app.post('/test-add', async function (req, res){
 app.post(':id/cancel', requiresAuth(), async function (req, res){
   const id = req.params.id;
   if (typeof id === 'string'){
-    await cancelPass(req.params.id);
+    await cancelPass(id);
   }
 });
 app.post(':id/delete', requiresAuth(), async function (req, res){
   const id = req.params.id;
   if (typeof id === 'string'){
-    await deletePass(req.params.id);
+    await deletePass(id);
   }
 });
 
