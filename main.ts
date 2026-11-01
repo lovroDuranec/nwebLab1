@@ -25,7 +25,7 @@ const hostname = externalUrl ? '0.0.0.0': '127.0.0.1'; // must match the callbac
 const config = { 
   authRequired : false,
   idpLogout : true, //logout not only from the app, but also from identity provider
-  secret: process.env.SECRET,
+  secret: process.env.APP_SECRET,
   baseURL: baseURL,
   clientID: process.env.CLIENT_ID,
   issuerBaseURL: `https://${process.env.AUTH_DOMAIN}`,
