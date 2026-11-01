@@ -3,7 +3,7 @@ import path from 'path'
 import oidc from 'express-openid-connect';
 const { auth, requiresAuth } = oidc;
 import dotenv from 'dotenv'
-import { initializeDatabase, getStatistics } from './database.js';
+import { initializeDatabase, getStatistics, getPassfor, deletePass, cancelPass, generateRandomPass } from './database.js';
 
 dotenv.config()
 await initializeDatabase();
@@ -47,13 +47,16 @@ app.post('/logout', (req, res) => res.oidc.logout());
 
 app.get('/', async function (req, res) {
   let username : string | undefined;
+  let passes = [];
+
   if (req.oidc.isAuthenticated()) {
     username = req.oidc.user?.name ?? req.oidc.user?.sub;
+    passes = await getPassfor(username);
   }
 
   const statistics = await getStatistics();
 
-  res.render('index', {username, total: statistics.total, active: statistics.active});
+  res.render('index', {username, total: statistics.total, active: statistics.active, passes});
   console.log("/ radi");
 });
 
@@ -70,6 +73,18 @@ app.get("/sign-up", (req, res) => {
     },
   });
 });
+
+app.post('/test-add', async function (req, res){
+  await generateRandomPass();
+});
+
+app.post(':id/cancel', requiresAuth(), async function (req, res){
+  await cancelPass(req.params.id);
+});
+app.post(':id/delete', requiresAuth(), async function (req, res){
+  await deletePass(req.params.id);
+});
+
 
 
 app.listen(port, hostname, () => {

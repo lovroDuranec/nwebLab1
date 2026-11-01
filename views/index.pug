@@ -11,14 +11,46 @@ html
 
 
         hr
-        
+
         if username
             h2 Welcome #{username}
         ul 
             if username
-                li: a(href="/passes") Pregled propusnica
                 li: form(action="/logout", method="post")
                     input(type="submit", value="Logout " + username)
             else
                 li: a(href='/sign-up', title='Sign up') Sign up
         
+        hr
+        h2 Vase propusnice
+        if username
+            form (action="/test-add", method="post")
+            button(type="submit") TEST - dodaj propusnicu za luku lukica
+
+            if passes.length ===0
+                p Nema propusnica
+            else
+                table(border="2" cellpadding="10")
+                thead
+                    tr
+                        th ID
+                        th Ime
+                        th Dokument
+                        th Izdano
+                        th Status
+                        th Mogucnosti
+                tbody
+                    each pass in passes
+                        tr
+                            td = pass.id
+                            td = pass.name
+                            td = pass.document
+                            td = pass.date
+                            td = pass.status
+                            td 
+                                if pass.status === 'ACTIVE'
+                                    form(action=pass.id + "/cancel" method="POST")
+                                    button(type="submit") Cancel
+                                else
+                                    form(action=pass.id + "/delete" method="POST")
+                                    button(type="submit") Delete
