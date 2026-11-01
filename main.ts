@@ -82,12 +82,14 @@ app.post('/:id/cancel', requiresAuth(), async function (req, res){
   if (typeof id === 'string'){
     await cancelPass(id);
   }
+  res.redirect('/');
 });
 app.post('/:id/delete', requiresAuth(), async function (req, res){
   const id = req.params.id;
   if (typeof id === 'string'){
     await deletePass(id);
   }
+  res.redirect('/');
 });
 
 
