@@ -1,11 +1,16 @@
 import dotenv from 'dotenv'
-dotenv.config()
 import {auth, requiredScopes } from 'express-oauth2-jwt-bearer';
-
+dotenv.config()
+const domain = process.env.AUTH0_DOMAIN;
+const audience = process.env.AUTH0_AUDIENCE;
+if (!domain || !audience) {
+  throw new Error(`Missing env: AUTH0_DOMAIN=${domain}, AUTH0_AUDIENCE=${audience}`);
+}
 export const checkJwt = auth({
-    audience: process.env.AUTH0_AUDIENCE,
-    issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}/`
-})
+  audience,
+  issuerBaseURL: `https://${domain}/`,
+  tokenSigningAlg: 'RS256',
+});
 
 export const requireReadPasses = requiredScopes('read:passes');
 export const requireCreatePasses = requiredScopes('create:passes');
