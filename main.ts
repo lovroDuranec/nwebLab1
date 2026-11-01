@@ -2,10 +2,9 @@ import express from 'express';
 import path from 'path'
 import oidc from 'express-openid-connect';
 const { auth, requiresAuth } = oidc;
-import dotenv from 'dotenv'
+import dotenv from 'dotenv/config';
 import { initializeDatabase, getStatistics, deletePass, cancelPass, getAllPasses, getPassFromId } from './database.js';
 import { checkJwt, requireReadPasses, requireCreatePasses } from './authMdw.js';
-dotenv.config()
 await initializeDatabase();
 
 
@@ -98,7 +97,7 @@ app.get('/passes/:id', checkJwt, requireReadPasses, async function (req, res){
   if (typeof id === 'string'){
     const pass = await getPassFromId(id);
     if (!pass){
-      return res.status(404);
+      return res.status(404).json({error: "Pass not found"});
     }
     return res.status(200).json(
       {
