@@ -18,16 +18,28 @@ export const pool = new Pool({
 
 
 export async function initializeDatabase() {
-    await pool.query(
-        `   CREATE TABLE IF NOT EXISTS passes (
+    await pool.query(`
+            CREATE TABLE IF NOT EXISTS passes (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             name VARCHAR(255) NOT NULL,
             document VARCHAR(255) NOT NULL,
             issued_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
             status VARCHAR(20) NOT NULL DEFAULT 'ACTIVE'
                 CHECK (status IN ('ACTIVE', 'CANCELLED'))
-        );`
-    );
+        );
+    `);
 
     console.log('baza je dobra');
+}
+
+export async function getStatistics(){
+    const info = await pool.query(`
+        SELECT COUNT(*) AS total,
+        COUNT(*) FILTER (WHERE status = 'ACTIVE') AS active
+        FROM passes 
+    `);
+    return {
+        total : Number(info.rows[0].total),
+        active : Number(info.rows[0].active)
+    };
 }

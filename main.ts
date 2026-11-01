@@ -3,11 +3,11 @@ import path from 'path'
 import oidc from 'express-openid-connect';
 const { auth, requiresAuth } = oidc;
 import dotenv from 'dotenv'
-import { initializeDatabase } from './database.js';
+import { initializeDatabase, getStatistics } from './database.js';
 
-
-await initializeDatabase();
 dotenv.config()
+await initializeDatabase();
+
 
 
 const externalUrl = process.env.RENDER_EXTERNAL_URL;
@@ -18,7 +18,7 @@ const app = express();
 app.set("views", path.join(import.meta.dirname, "views"));
 app.set('view engine', 'pug');
 
-const hostname = externalUrl ? '0.0.0.0': '127.0.0.'; // must match the callback URL registered in Auth0
+const hostname = externalUrl ? '0.0.0.0': '127.0.0.1'; // must match the callback URL registered in Auth0
 
 const config = { 
   authRequired : false,
@@ -48,7 +48,10 @@ app.get('/',  function (req, res) {
   if (req.oidc.isAuthenticated()) {
     username = req.oidc.user?.name ?? req.oidc.user?.sub;
   }
-  res.render('index', {username});
+
+  const statistics = await getStatistics();
+
+  res.render('index', {username, total: statistics.total, active: statistics.active});
 });
 
 app.get('/private', requiresAuth(), function (req, res) {       
