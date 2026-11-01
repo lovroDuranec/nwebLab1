@@ -77,13 +77,13 @@ app.get("/sign-up", (req, res) => {
 });
 
 
-app.post(':id/cancel', requiresAuth(), async function (req, res){
+app.post('/:id/cancel', requiresAuth(), async function (req, res){
   const id = req.params.id;
   if (typeof id === 'string'){
     await cancelPass(id);
   }
 });
-app.post(':id/delete', requiresAuth(), async function (req, res){
+app.post('/:id/delete', requiresAuth(), async function (req, res){
   const id = req.params.id;
   if (typeof id === 'string'){
     await deletePass(id);
