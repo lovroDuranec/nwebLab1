@@ -3,7 +3,7 @@ import path from 'path'
 import oidc from 'express-openid-connect';
 const { auth, requiresAuth } = oidc;
 import dotenv from 'dotenv'
-import { initializeDatabase, getStatistics, getPassFor, deletePass, cancelPass, getAllPasses } from './database.js';
+import { initializeDatabase, getStatistics, deletePass, cancelPass, getAllPasses } from './database.js';
 
 dotenv.config()
 await initializeDatabase();
