@@ -1,0 +1,85 @@
+html 
+    head 
+        title nweb Lab1 - OAuth2/OpenID
+
+
+
+    style.
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #666;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #ddd;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    body
+        h1 Propusnice
+
+        h2 statistika
+        p ukupno propusnica: #{total}
+        p aktivno propusnica: #{active}
+
+
+        hr
+
+        if username
+            h2 Welcome #{username}
+        ul 
+            if username
+                li: form(action="/logout", method="post")
+                    input(type="submit", value="Logout " + username)
+            else
+                li: a(href='/sign-up', title='Sign up') Sign up
+        
+        hr
+        h2 Vase propusnice
+        if username
+            if passes.length ===0
+                p Nema propusnica
+            else
+                table
+                    thead
+                        tr
+                            th ID
+                            th Ime
+                            th Dokument
+                            th Izdano
+                            th Status
+                            th Mogucnosti
+                    tbody
+                        each pass in passes
+                            tr
+                                td= pass.id
+                                td= pass.name
+                                td= pass.document
+                                td= pass.issued_at
+                                td= pass.status
+                                td 
+                                    if pass.status === 'ACTIVE'
+                                        form(action=pass.id + "/cancel" method="POST")
+                                            button(type="submit") Cancel
+                                    form(action=pass.id + "/delete" method="POST")
+                                        button(type="submit") Delete
