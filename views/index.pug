@@ -57,29 +57,29 @@ html
         hr
         h2 Vase propusnice
         if username
-
             if passes.length ===0
                 p Nema propusnica
             else
-                thead
-                    tr
-                        th ID
-                        th Ime
-                        th Dokument
-                        th Izdano
-                        th Status
-                        th Mogucnosti
-                tbody
-                    each pass in passes
+                table
+                    thead
                         tr
-                            td= pass.id
-                            td= pass.name
-                            td= pass.document
-                            td= pass.issued_at
-                            td= pass.status
-                            td 
-                                if pass.status === 'ACTIVE'
-                                    form(action=pass.id + "/cancel" method="POST")
-                                        button(type="submit") Cancel
-                                form(action=pass.id + "/delete" method="POST")
-                                    button(type="submit") Delete
+                            th ID
+                            th Ime
+                            th Dokument
+                            th Izdano
+                            th Status
+                            th Mogucnosti
+                    tbody
+                        each pass in passes
+                            tr
+                                td= pass.id
+                                td= pass.name
+                                td= pass.document
+                                td= pass.issued_at
+                                td= pass.status
+                                td 
+                                    if pass.status === 'ACTIVE'
+                                        form(action=pass.id + "/cancel" method="POST")
+                                            button(type="submit") Cancel
+                                    form(action=pass.id + "/delete" method="POST")
+                                        button(type="submit") Delete
