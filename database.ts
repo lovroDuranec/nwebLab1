@@ -64,8 +64,8 @@ export async function generateRandomPass(){
     //samo za testiranje, radi s testim userom luka.lukic@gmail.com
     const name = 'luka.lukic@gmail.com'
     const document = 'dokuemnt-' + Math.floor(Math.random() * 10000000);
-    const status = Math.radom() > 0.5 ? 'ACTIVE' : 'CANCELLED';
+    const status = Math.random() > 0.5 ? 'ACTIVE' : 'CANCELLED';
     await pool.query(`
         INSERT into passes (name, document, status) VALUES ($1, $2, $3)
-    `, [name], [document], [status]);
+    `, [name,document,status]);
 }
