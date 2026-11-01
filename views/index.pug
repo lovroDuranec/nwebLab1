@@ -1,15 +1,24 @@
 html 
     head 
-        title OAuth2/OpenID login demo
+        title nweb Lab1 - OAuth2/OpenID
+
     body
+        h1 Propusnice
+
+        h2 statistika
+        p ukupno propusnica: #{total}
+        p aktivno propusnica: #{active}
+
+
+        hr
+        
         if username
-            h1 Welcome #{username}
+            h2 Welcome #{username}
         ul 
-            li: a(href='/', title='Home') Home
-            li: a(href='/private') Private content             
             if username
+                li: a(href="/passes") Pregled propusnica
                 li: form(action="/logout", method="post")
                     input(type="submit", value="Logout " + username)
             else
-                li: a(href='/sign-up', title='Sign up') Sign up 
+                li: a(href='/sign-up', title='Sign up') Sign up
         
