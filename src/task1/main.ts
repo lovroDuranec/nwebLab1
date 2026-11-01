@@ -28,7 +28,7 @@ const config = {
   secret: process.env.APP_SECRET,
   baseURL: baseURL,
   clientID: process.env.CLIENT_ID,
-  issuerBaseURL: `https://${process.env.AUTH_DOMAIN}`,
+  issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}`,
   clientSecret: process.env.CLIENT_SECRET,
   routes: {
     logout: false as const // library registers GET /logout only; POST is used instead (see below)
@@ -43,7 +43,7 @@ app.use(auth(config));
 
 // logout changes state (removes session), so POST is used instead of GET
 // (otherwise any page could log the user out with a link or redirect - logout CSRF)
-app.post('/logout', (req, res) => res.oidc.logout());
+app.post('/logout', (req, res) => res.oidc.logout({ returnTo: baseURL }));
 
 app.get('/', async function (req, res) {
   let username : string | undefined;
