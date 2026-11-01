@@ -3,7 +3,7 @@ import path from 'path'
 import oidc from 'express-openid-connect';
 const { auth, requiresAuth } = oidc;
 import dotenv from 'dotenv'
-import { initializeDatabase, getStatistics, getPassFor, deletePass, cancelPass, generateRandomPass } from './database.js';
+import { initializeDatabase, getStatistics, getPassFor, deletePass, cancelPass } from './database.js';
 
 dotenv.config()
 await initializeDatabase();
@@ -76,9 +76,6 @@ app.get("/sign-up", (req, res) => {
   });
 });
 
-app.post('/test-add', async function (req, res){
-  await generateRandomPass();
-});
 
 app.post(':id/cancel', requiresAuth(), async function (req, res){
   const id = req.params.id;
