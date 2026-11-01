@@ -40,11 +40,11 @@ html
                 tbody
                     each pass in passes
                         tr
-                            td = pass.id
-                            td = pass.name
-                            td = pass.document
-                            td = pass.date
-                            td = pass.status
+                            td= pass.id
+                            td= pass.name
+                            td= pass.document
+                            td= pass.issued_at
+                            td= pass.status
                             td 
                                 if pass.status === 'ACTIVE'
                                     form(action=pass.id + "/cancel" method="POST")

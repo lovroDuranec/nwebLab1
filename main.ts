@@ -3,7 +3,7 @@ import path from 'path'
 import oidc from 'express-openid-connect';
 const { auth, requiresAuth } = oidc;
 import dotenv from 'dotenv'
-import { initializeDatabase, getStatistics, getPassFor, deletePass, cancelPass } from './database.js';
+import { initializeDatabase, getStatistics, getPassFor, deletePass, cancelPass, getAllPasses } from './database.js';
 
 dotenv.config()
 await initializeDatabase();
@@ -52,7 +52,7 @@ app.get('/', async function (req, res) {
   if (req.oidc.isAuthenticated()) {
     username = req.oidc.user?.name ?? req.oidc.user?.sub;
     if (username){
-      passes = await getPassFor(username);
+      passes = await getAllPasses(username);
     }
   }
 

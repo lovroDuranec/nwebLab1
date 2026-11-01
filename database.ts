@@ -55,7 +55,7 @@ export async function cancelPass(id: string){
         SET status = 'CANCELLED' WHERE id = $1
     `, [id]);
 }
-export async function getPassFor(name: string){
+export async function getAllPasses(name: string){
     const result = await pool.query(`
         SELECT id, name, document, issued_at, status FROM passes
     `);
