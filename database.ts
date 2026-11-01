@@ -70,3 +70,11 @@ export async function getPassFromId(id: string){
 
     return result.rows[0];
 }
+
+export async function createPass(name: string, document: string){
+    const result = await pool.query(`
+        INSERT INTO passes (name, document, issued_at, status) VALUES ($1, $2, NOW(), 'ACTIVE') RETURNING id
+    `,
+    [name, document]);
+    return result.rows[0].id;
+}
