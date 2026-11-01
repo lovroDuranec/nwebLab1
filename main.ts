@@ -2,9 +2,8 @@ import express from 'express';
 import path from 'path'
 import oidc from 'express-openid-connect';
 import QRCode from 'qrcode';
-import { randomUUID } from 'crypto';
 const { auth, requiresAuth } = oidc;
-import dotenv from 'dotenv/config';
+import 'dotenv/config';
 import { initializeDatabase, getStatistics, deletePass, cancelPass, getAllPasses, getPassFromId, createPass } from './database.js';
 import { checkJwt, requireReadPasses, requireCreatePasses } from './authMdw.js';
 await initializeDatabase();
@@ -120,7 +119,7 @@ app.post('/passes', checkJwt, requireCreatePasses, async function (req, res){
   const id = await createPass(name, document);
   const png = await QRCode.toBuffer(`${baseURL}/info/${id}`);
 
-  return res.status(201).set("Location", `${baseURL}/info/${id}`).type('image/png').send(png);
+  return res.status(201).set("Location", `${baseURL}/passes/${id}`).type('image/png').send(png);
 });
 
 app.get('/info/:id', async function (req, res){
