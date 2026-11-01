@@ -57,17 +57,8 @@ export async function cancelPass(id: string){
 }
 export async function getPassFor(name: string){
     const result = await pool.query(`
-        SELECT id, name, document, issued_at, status FROM passes WHERE name = $1
-    `, [name]);
+        SELECT id, name, document, issued_at, status FROM passes
+    `);
 
     return result.rows;
-}
-export async function generateRandomPass(){
-    //samo za testiranje, radi s testim userom luka.lukic@gmail.com
-    const name = 'luka.lukic@gmail.com'
-    const document = 'dokuemnt-' + Math.floor(Math.random() * 10000000);
-    const status = Math.random() > 0.5 ? 'ACTIVE' : 'CANCELLED';
-    await pool.query(`
-        INSERT into passes (name, document, status) VALUES ($1, $2, $3)
-    `, [name,document,status]);
 }

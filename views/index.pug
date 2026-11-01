@@ -51,6 +51,5 @@ html
                                 if pass.status === 'ACTIVE'
                                     form(action=pass.id + "/cancel" method="POST")
                                     button(type="submit") Cancel
-                                else
-                                    form(action=pass.id + "/delete" method="POST")
-                                    button(type="submit") Delete
+                                form(action=pass.id + "/delete" method="POST")
+                                button(type="submit") Delete
