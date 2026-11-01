@@ -2,6 +2,39 @@ html
     head 
         title nweb Lab1 - OAuth2/OpenID
 
+
+
+    style.
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+        h1 {
+            color: #333;
+        }
+        h2 {
+            color: #666;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #ddd;
+        }
+        button {
+            padding: 8px 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
     body
         h1 Propusnice
 
@@ -28,7 +61,6 @@ html
             if passes.length ===0
                 p Nema propusnica
             else
-                table(border="2" cellpadding="10")
                 thead
                     tr
                         th ID
@@ -48,6 +80,6 @@ html
                             td 
                                 if pass.status === 'ACTIVE'
                                     form(action=pass.id + "/cancel" method="POST")
-                                    button(type="submit") Cancel
+                                        button(type="submit") Cancel
                                 form(action=pass.id + "/delete" method="POST")
-                                button(type="submit") Delete
+                                    button(type="submit") Delete
